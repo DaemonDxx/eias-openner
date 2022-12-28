@@ -42,10 +42,6 @@ func main() {
 			log.Fatal(err)
 		}
 
-		if err != nil {
-			log.Fatal(err)
-		}
-
 		archiveFile, err := f.Open()
 
 		if err != nil {
@@ -64,15 +60,10 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Println(distPath)
-		cmd := exec.Command("explorer.exe", distPath)
-
-		stdout, err := cmd.Output()
-		if err != nil {
-			log.Fatal(err)
-		}
+		exec.Command("explorer.exe", distPath)
 
 		wg.Add(1)
+
 		go func() {
 			<-time.After(2 * time.Second)
 			err := os.RemoveAll(distPath)
@@ -81,7 +72,6 @@ func main() {
 			}
 			wg.Done()
 		}()
-		fmt.Printf(string(stdout))
 
 	}
 
